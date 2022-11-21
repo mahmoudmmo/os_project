@@ -67,3 +67,12 @@ inline void pd_clear_page_dir_entry(uint32* page_directory, uint32 virtual_addre
 	page_directory[PDX(virtual_address)] = 0 ;
 	tlbflush();
 }
+inline int pt_get_page_permissions(uint32* page_directory, uint32 virtual_address )
+{
+	uint32 *ptr_page_table=NULL;
+	  get_page_table(page_directory,virtual_address,&ptr_page_table);
+	     if(ptr_page_table!=NULL)
+	    	 return ptr_page_table[PTX(virtual_address)]&0x00000FFF;
+	     else
+	    	   return -1;
+}
